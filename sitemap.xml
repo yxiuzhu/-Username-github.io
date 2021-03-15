@@ -2,14 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yxiuzhu.top/2021/03/07/Hello-Hexo/</loc>
+    <loc>http://yxiuzhu.github.io/categories/index.html</loc>
+    
+    <lastmod>2021-03-15</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yxiuzhu.github.io/2021/03/07/Hello-Hexo/</loc>
     
     <lastmod>2021-03-07</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yxiuzhu.top/2021/03/07/hello-world/</loc>
+    <loc>http://yxiuzhu.github.io/2021/03/07/hello-world/</loc>
     
     <lastmod>2021-03-07</lastmod>
     
@@ -17,7 +24,7 @@
   
 
   <url>
-    <loc>http://yxiuzhu.top/</loc>
+    <loc>http://yxiuzhu.github.io/</loc>
     <lastmod>2021-03-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
