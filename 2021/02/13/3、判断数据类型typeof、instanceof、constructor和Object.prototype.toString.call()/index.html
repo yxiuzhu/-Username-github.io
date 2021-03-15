@@ -1,0 +1,789 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端基础          //多个标签可以这样添加," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="对比几种判断数据类型的方式的优缺点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3、判断数据类型typeof、instanceof、constructor和Object.prototype.toString.call()">
+<meta property="og:url" content="http://yxiuzhu.github.io/2021/02/13/3%E3%80%81%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8Btypeof%E3%80%81instanceof%E3%80%81constructor%E5%92%8CObject.prototype.toString.call()/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="对比几种判断数据类型的方式的优缺点">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/2df4c524793c53d7f9083b283d936fba.png#align=left&display=inline&height=83&margin=%5Bobject%20Object%5D&name=image.png&originHeight=165&originWidth=543&size=13713&status=done&style=none&width=271.5#pic_center">
+<meta property="article:published_time" content="2021-02-13T03:50:21.000Z">
+<meta property="article:modified_time" content="2021-03-15T13:33:23.596Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="前端基础          &#x2F;&#x2F;多个标签可以这样添加">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/2df4c524793c53d7f9083b283d936fba.png#align=left&display=inline&height=83&margin=%5Bobject%20Object%5D&name=image.png&originHeight=165&originWidth=543&size=13713&status=done&style=none&width=271.5#pic_center">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yxiuzhu.github.io/2021/02/13/3、判断数据类型typeof、instanceof、constructor和Object.prototype.toString.call()/"/>
+
+
+
+
+
+  <title> 3、判断数据类型typeof、instanceof、constructor和Object.prototype.toString.call() | Hexo </title>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yxiuzhu.github.io/2021/02/13/3%E3%80%81%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8Btypeof%E3%80%81instanceof%E3%80%81constructor%E5%92%8CObject.prototype.toString.call()/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                3、判断数据类型typeof、instanceof、constructor和Object.prototype.toString.call()
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-13T11:50:21+08:00">
+                2021-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对比几种判断数据类型的方式的优缺点</p>
+<span id="more"></span>
+<h4 id="3-1-typeof"><a href="#3-1-typeof" class="headerlink" title="3.1 typeof"></a>3.1 <strong>typeof</strong></h4><ul>
+<li><code>typeof</code> 对于原始类型来说，除了 <code>null</code> 都可以显示正确的类型</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设计缺陷</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>  <span class="comment">//&quot;object&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>typeof缺点</strong></p>
+<blockquote>
+<p><code>typeof</code> 对于对象来说，除了函数都会显示 <code>object</code>，所以说 <code>typeof</code> 并不能准确判断变量到底是什么类型</p>
+</blockquote>
+<ul>
+<li>如果我们想判断一个对象的正确类型，这时候可以考虑使用 <code>instanceof</code>，因为内部机制是通过原型链来判断的</li>
+</ul>
+<h4 id="3-2-instanceof"><a href="#3-2-instanceof" class="headerlink" title="3.2 instanceof"></a>3.2 <strong>instanceof</strong></h4><ul>
+<li><code>instanceof</code>运算符用于检测构造函数的 <code>prototype</code> 属性是否出现在某个实例对象的原型链上。简单来说就是 <code>instanceof</code> 是用来判断 A 是否为 B 的实例。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际上是判断Array.prototype是否在[]的原型链上</span></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Array</span>  <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>instanceof 的缺点</strong></p>
+<ul>
+<li><p>不管是数组对象还是正则对象，都是 Object 的实例，检测结果都是 TRUE ，所以无法基于这个结果判断是否为普通对象。加上是否处于原型链上的判断方法不严谨，instanceof 方法判断的是是否处于原型链上，而不是是不是处于原型链最后一位，所以会出现下面这种情况：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Object</span>);  <span class="comment">// true</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(fn <span class="keyword">instanceof</span> <span class="built_in">Function</span>)<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(fn <span class="keyword">instanceof</span> <span class="built_in">Object</span>)<span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li><p>基本数据类型的实例是无法基于它检测出来的，即不能检测基本数据类型</p>
+<ul>
+<li>字面量方式创建的不能检测</li>
+<li>构造函数创建的就可以检测</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对于基本数据类型来说，字面量方式创建出来的结果和实例方式创建的是有一定区别的</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span> <span class="keyword">instanceof</span> <span class="built_in">Number</span>)<span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>) <span class="keyword">instanceof</span> <span class="built_in">Number</span>)<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从严格意义上来讲，只有实例创建出来的结果才是标准的对象数据类型值，也是标准的 Number 这个类的一个实例；对于字面量方式创建出来的结果是基本的数据类型值，不是严谨的实例，但是由于 JS 的松散特点，导致了可以使用 Number.prototype 上提供的方法。</p>
+</blockquote>
+<ul>
+<li>无法检测 null 和 undefined</li>
+</ul>
+<blockquote>
+<p>对于特殊的数据类型 <code>null</code> 和 <code>undefined</code>，他们的所属类是 <code>Null</code> 和 <code>Undefined</code>，但是浏览器把这两个类保护起来了，不允许我们在外面访问使用。<img src="https://img-blog.csdnimg.cn/img_convert/2df4c524793c53d7f9083b283d936fba.png#align=left&display=inline&height=83&margin=%5Bobject%20Object%5D&name=image.png&originHeight=165&originWidth=543&size=13713&status=done&style=none&width=271.5#pic_center" alt="在这里插入图片描述"></p>
+</blockquote>
+<h3 id="3-3-constructor"><a href="#3-3-constructor" class="headerlink" title="3.3 constructor"></a>3.3 <strong>constructor</strong></h3><ul>
+<li><code>constructor</code> 作用和 <code>instanceof</code> 非常相似。但 <code>constructor</code> 检测 <code>Object</code> 与 <code>instanceof</code> 不一样，还可以处理基本数据类型的检测。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aa=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line"><span class="built_in">console</span>.log(aa.constructor===<span class="built_in">Array</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(aa.constructor===<span class="built_in">RegExp</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log((<span class="number">1</span>).constructor===<span class="built_in">Number</span>);<span class="comment">//true</span></span><br><span class="line"><span class="keyword">var</span> reg=<span class="regexp">/^$/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(reg.constructor===<span class="built_in">RegExp</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.constructor===<span class="built_in">Object</span>);<span class="comment">//false</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>constructor 的缺点</strong></p>
+<ul>
+<li>无法检测 null 和 undefined</li>
+</ul>
+<blockquote>
+<p><code>null</code> 和 <code>undefined</code> 是无效的对象，因此是不会有 <code>constructor</code> 存在的，这两种类型的数据需要通过其他方式来判断。</p>
+</blockquote>
+<ul>
+<li>不稳定</li>
+</ul>
+<blockquote>
+<p>函数的 <code>constructor</code> 是不稳定的，这个主要体现在把类的原型进行重写，在重写的过程中很有可能出现把之前的 <code>constructor</code> 给覆盖了，这样检测出来的结果就是不准确的，由此可知 <code>instanceof</code> 同样也存在这个问题。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Fn.prototype = <span class="keyword">new</span> <span class="built_in">Array</span>()</span><br><span class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> Fn</span><br><span class="line"><span class="built_in">console</span>.log(f.constructor)<span class="comment">//Array</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-4-Object-prototype-toString-call"><a href="#3-4-Object-prototype-toString-call" class="headerlink" title="3.4 Object.prototype.toString.call()"></a>3.4 <strong>Object.prototype.toString.call()</strong></h3><p>这个方法在Object的原型上</p>
+<blockquote>
+<p>定义：找到<code>Object.prototype</code>上的<code>toString</code>方法，让<code>toString</code>方法执行，并且基于<code>call</code>让方法中的<code>this</code>指向检测的数据值，这样就可以实现数据类型检测了</p>
+</blockquote>
+<p>MDN上的描述：</p>
+<blockquote>
+<p>每个对象都有一个 <code>toString()</code> 方法，当该对象被表示为一个文本值时，或者一个对象以预期的字符串方式引用时自动调用。默认情况下，<code>toString()</code> 方法被每个 <code>Object</code> 对象继承。如果此方法在自定义对象中未被覆盖，<code>toString()</code> 返回 <code>&quot;[object type]&quot;</code>，其中 <code>type</code> 是对象的类型。以下代码说明了这一点：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">o.toString(); <span class="comment">// returns [object Object]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从 JavaScript 1.8.5 开始，<code>toString()</code> 调用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/null"><code>null</code></a> 返回<code>[object  Null]</code>，<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><code>undefined</code></a> 返回 <code>[object Undefined]</code></p>
+</blockquote>
+<p>可以通过 toString() 来获取每个对象的类型。</p>
+<blockquote>
+<p>为了每个对象都能通过 Object.prototype.toString() 来检测，需要以 Function.prototype.call() 或者 Function.prototype.apply() 的形式来调用，传递要检查的对象作为第一个参数，称为 thisArg。</p>
+</blockquote>
+<ul>
+<li>实例<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="string">&#x27;&#x27;</span>) ;   <span class="comment">// [object String]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="number">1</span>) ;    <span class="comment">// [object Number]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">true</span>) ; <span class="comment">// [object Boolean]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">undefined</span>) ; <span class="comment">// [object Undefined]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">null</span>) ; <span class="comment">// [object Null]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">Function</span>()) ; <span class="comment">// [object Function]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">Date</span>()) ; <span class="comment">// [object Date]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call([]) ; <span class="comment">// [object Array]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">RegExp</span>()) ; <span class="comment">// [object RegExp]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">Error</span>()) ; <span class="comment">// [object Error]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">document</span>) ; <span class="comment">// [object HTMLDocument]</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">window</span>) ; <span class="comment">//[object global] window是全局对象global的引用</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-5-补充："><a href="#3-5-补充：" class="headerlink" title="3.5 补充："></a>3.5 补充：</h3><blockquote>
+<p>面试题：<code>instance</code>的原理是什么</p>
+</blockquote>
+<p><code>instanceof</code> 可以正确的判断对象的类型，因为内部机制是通过判断对象的原型链中是不是能找到类型的 <code>prototype</code></p>
+<blockquote>
+<p>代码实现<code>instanceof</code></p>
+</blockquote>
+<ul>
+<li>首先获取类型的原型</li>
+<li>然后获得对象的原型</li>
+<li>循环判断对象的原型是否等于类型的原型，直到对象原型为<code>null</code>，因为原型链最终为<code>null</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myInstanceof</span>(<span class="params">left, right</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> prototype = right.prototype</span><br><span class="line">  left = left.__proto__</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (left === <span class="literal">null</span> || left === <span class="literal">undefined</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> (prototype === left)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    left = left.__proto__</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//测试</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80-%E5%A4%9A%E4%B8%AA%E6%A0%87%E7%AD%BE%E5%8F%AF%E4%BB%A5%E8%BF%99%E6%A0%B7%E6%B7%BB%E5%8A%A0/" rel="tag"># 前端基础          //多个标签可以这样添加</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/07/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-typeof"><span class="nav-number">1.</span> <span class="nav-text">3.1 typeof</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-instanceof"><span class="nav-number">2.</span> <span class="nav-text">3.2 instanceof</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-constructor"><span class="nav-number"></span> <span class="nav-text">3.3 constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Object-prototype-toString-call"><span class="nav-number"></span> <span class="nav-text">3.4 Object.prototype.toString.call()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E8%A1%A5%E5%85%85%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">3.5 补充：</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"right","width":170,"height":340,"hOffset":-25,"vOffset":-25},"mobile":{"show":true},"react":{"opacity":1},"log":false});</script></body>
+</html>
